@@ -1,0 +1,12 @@
+{
+  "name": "com.grygtools.pooler",
+  "version": "1.0.0",
+  "displayName": "GrygTools-Pooler",
+  "description": "Pooling for non network objects",
+  "unity": "2020.3",
+  "dependencies": {
+    "com.unity.addressables": "1.21.20",
+    "com.unity.textmeshpro": "3.0.6",
+	"com.grygtools.utils": "1.0.0"
+  }
+}
