@@ -1,17 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
-
-
-namespace GrygTools.Pooler
-{
-	internal class Pool : IPool
-    {
-        private Dictionary<GameObject, LeaseHandle> m_Handles = new ();
-        private GameObject m_Template;
-        private Transform m_Lane;
-        int IPool.Count => m_Handles.Count;
-        
         public Task Init(GameObject template)
         {
             m_Template = template;
