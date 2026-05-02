@@ -1,6 +1,6 @@
 {
   "name": "com.grygtools.pooler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "GrygTools-Pooler",
   "description": "Pooling for non network objects",
   "unity": "2020.3",
