@@ -1,0 +1,16 @@
+{
+    "name": "GrygTools.Pooler.Runtime",
+    "references": [
+        "Unity.TextMeshPro",
+		"GrygTools.Utils.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
