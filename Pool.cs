@@ -32,25 +32,40 @@ namespace GrygTools.Pooler
         
         GameObject IPool.FindAvailableObject()
         {
-            GameObject leaseObject;
+            GameObject leaseObject = null;
+            List<GameObject> toBeRemoved = new();
             foreach (KeyValuePair<GameObject,LeaseHandle> pair in m_Handles)
             {
                 LeaseHandle lease = pair.Value;
 
                 if (lease == null)
                 {
-                    m_Handles.Remove(pair.Key);
+                    toBeRemoved.Add(pair.Key);
                 }
                 else if (lease.TryLease(out leaseObject))
                 {
                     leaseObject.transform.rotation = m_Template.transform.rotation;
                     leaseObject.transform.localScale = m_Template.transform.localScale;
                     leaseObject.SetActive(true);
-				
-                    return leaseObject;
+
+                    break;
+                }
+                else
+                {
+                    toBeRemoved.Add(pair.Key);
                 }
             }
 
+            for (int i = toBeRemoved.Count - 1; i >= 0; i--)
+            {
+                m_Handles.Remove(toBeRemoved[i]);
+            }
+
+            if (leaseObject != null)
+            {
+                return leaseObject;
+            }
+            
             LeaseHandle newLease = new LeaseHandle(m_Template, m_Lane);
             m_Handles.Add(newLease.Obj, newLease);
             newLease.TryLease(out leaseObject);
@@ -90,13 +105,28 @@ namespace GrygTools.Pooler
 
         void IPool.RemoveLeasedObject(LeaseHandle leaseHandle, bool destroyOnRemove)
         {
+            if (PoolManager.Instance.ObjectToPool.Remove(leaseHandle.Obj))
+            {
+                m_Handles.Remove(leaseHandle.Obj);
+                if (destroyOnRemove && leaseHandle.Obj != null)
+                {
+                    Object.Destroy(leaseHandle.Obj);
+                }
+                return;
+            }
+
+
             foreach (KeyValuePair<GameObject,LeaseHandle> pair in m_Handles)
             {
-                m_Handles.Remove(pair.Key);
-                PoolManager.Instance.ObjectToPool.Remove(pair.Key);
-                if (destroyOnRemove && pair.Value.Obj != null)
+                if (pair.Value == leaseHandle)
                 {
-                    Object.Destroy(pair.Value.Obj);
+                    m_Handles.Remove(pair.Key);
+                    PoolManager.Instance.ObjectToPool.Remove(pair.Key);
+                    if (destroyOnRemove && pair.Value.Obj != null)
+                    {
+                        Object.Destroy(pair.Value.Obj);
+                    }
+                    return;
                 }
             }
         }

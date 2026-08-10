@@ -22,10 +22,6 @@ namespace GrygTools.Pooler
         internal bool TryLease(out GameObject leaseObject)
         {
             leaseObject = null;
-            if (m_Obj == null)
-            {
-                PoolManager.Instance.RemoveObj(this, true);
-            }
             if (m_InUse)
             {
                 return false;
