@@ -1,4 +1,4 @@
-﻿using GrygToolsUtils;
+﻿using GrygTools.Utils.Core;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
